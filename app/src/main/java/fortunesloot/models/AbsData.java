@@ -1,15 +1,15 @@
 package fortunesloot.models;
 
-public abstract class Data {
+public abstract class AbsData {
     private String jenis;
     private int jumlah;
     private String tanggal;
     
     public abstract String tanggalWaktuNow();
 
-    public Data() {}
+    public AbsData() {}
     
-    public Data(String jenis, int jumlah, String tanggal) {
+    public AbsData(String jenis, int jumlah, String tanggal) {
         this.jenis = jenis;
         this.jumlah = jumlah;
         this.tanggal = tanggal;

@@ -3,7 +3,7 @@ package fortunesloot.models;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class DataUser extends Data {
+public class DataUser extends AbsData {
 
     public DataUser(String jenis, int jumlah, String tanggal) {
         super(jenis, jumlah, tanggal);

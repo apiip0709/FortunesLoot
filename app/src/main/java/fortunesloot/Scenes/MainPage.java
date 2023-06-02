@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import fortunesloot.models.Data;
+import fortunesloot.models.AbsData;
 import fortunesloot.models.DataUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,13 +25,13 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class MainPage extends Data{
+public class MainPage extends AbsData{
     private Stage primaryStage;
     private BorderPane mainLayout;
     public int totalPenghasilan;
     public int totalPengeluaran;
-    private ObservableList<Data> listPenghasilan;
-    private ObservableList<Data> listPengeluaran;
+    private ObservableList<AbsData> listPenghasilan;
+    private ObservableList<AbsData> listPengeluaran;
 
     public MainPage(String jenis, int jumlah, String tanggal) {
         super(jenis, jumlah, tanggal);
@@ -127,12 +127,12 @@ public class MainPage extends Data{
 
     private Button buttonPenghasilan() {
         // Membuat Table View
-        TableView<Data> tableData = new TableView<>();
+        TableView<AbsData> tableData = new TableView<>();
         
         // Table Column
-        TableColumn<Data, String> column1 = new TableColumn<>("Jenis");
-        TableColumn<Data, Integer> column2 = new TableColumn<>("Jumlah");
-        TableColumn<Data, String> column3 = new TableColumn<>("Tanggal");
+        TableColumn<AbsData, String> column1 = new TableColumn<>("Jenis");
+        TableColumn<AbsData, Integer> column2 = new TableColumn<>("Jumlah");
+        TableColumn<AbsData, String> column3 = new TableColumn<>("Tanggal");
 
         // Pasangkan
         column1.setCellValueFactory(new PropertyValueFactory<>("jenis"));
@@ -235,12 +235,12 @@ public class MainPage extends Data{
 
     private Button buttonPengeluaran() {
         // Membuat Table View
-        TableView<Data> tableData = new TableView<>();
+        TableView<AbsData> tableData = new TableView<>();
         
         // Table Column
-        TableColumn<Data, String> column1 = new TableColumn<>("Jenis");
-        TableColumn<Data, Integer> column2 = new TableColumn<>("Jumlah");
-        TableColumn<Data, LocalDate> column3 = new TableColumn<>("Tanggal");
+        TableColumn<AbsData, String> column1 = new TableColumn<>("Jenis");
+        TableColumn<AbsData, Integer> column2 = new TableColumn<>("Jumlah");
+        TableColumn<AbsData, LocalDate> column3 = new TableColumn<>("Tanggal");
 
         // Pasangkan
         column1.setCellValueFactory(new PropertyValueFactory<>("jenis"));
