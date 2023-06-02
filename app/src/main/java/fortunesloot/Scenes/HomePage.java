@@ -29,7 +29,7 @@ public class HomePage {
         bgIv.setFitWidth(400);
         bgIv.setFitHeight(650);
             
-        // menmbuat button 
+        // menmbuat button main
         Button buttonMain = new Button("THRIFTY");
         buttonMain.setStyle(" -fx-background-color: transparent; -fx-font-size: 23px; -fx-font-weight: bold; -fx-font-family: Verdana; -fx-text-fill: white;");
         buttonMain.setPrefHeight(50);
@@ -49,10 +49,30 @@ public class HomePage {
             buttonMain.setStyle(" -fx-background-color: transparent; -fx-font-size: 23px; -fx-font-weight: bold; -fx-font-family: Verdana; -fx-text-fill: white;");
         });
 
-        VBox vBox = new VBox(270, label, buttonMain);
-        vBox.setAlignment(Pos.CENTER);
+        // membuat button exit
+        Button buttonExit = new Button("EXIT");
+        buttonExit.setStyle("-fx-background-color: transparent; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: black;");
 
-        StackPane spLayout = new StackPane(bgIv, vBox);
+        // action button
+        buttonExit.setOnAction(v -> {
+            LoginPage lp = new LoginPage(primaryStage);
+            lp.show();
+        });
+
+        buttonExit.setOnMouseEntered(v -> {
+            buttonExit.setStyle("-fx-background-radius: 25; -fx-background-color: red; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: black;");
+        });
+
+        buttonExit.setOnMouseExited(v -> {
+            buttonExit.setStyle("-fx-background-color: transparent; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: black;");
+        });
+
+        VBox vBox = new VBox(110, buttonMain, buttonExit);
+        vBox.setAlignment(Pos.CENTER);
+        VBox vBox2 = new VBox(360, label, vBox);
+        vBox2.setAlignment(Pos.CENTER);
+
+        StackPane spLayout = new StackPane(bgIv, vBox2);
         Scene scene = new Scene(spLayout, 400, 650);
         
         primaryStage.setScene(scene);
