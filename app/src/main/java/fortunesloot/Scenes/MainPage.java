@@ -1,14 +1,15 @@
 package fortunesloot.Scenes;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import fortunesloot.models.Data;
 import fortunesloot.models.DataUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -17,10 +18,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
@@ -89,6 +90,7 @@ public class MainPage extends Data{
         Button exitButton = new Button("");
         Button buttonPenghasilan = buttonPenghasilan();
         Button buttonPengeluaran = buttonPengeluaran();
+        Button buttonDompet = dompet();
 
         // set button Image Icon
         Image icon = new Image("/images/iconhome.png");
@@ -114,7 +116,7 @@ public class MainPage extends Data{
             exitButton.setStyle(" -fx-background-color: #34495E;");
         });
 
-        HBox sidebar = new HBox(exitButton, buttonPenghasilan, buttonPengeluaran);
+        HBox sidebar = new HBox(exitButton, buttonPenghasilan, buttonPengeluaran, buttonDompet);
         sidebar.setStyle("-fx-background-color: #34495E;");
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(5));
@@ -339,6 +341,108 @@ public class MainPage extends Data{
         return buttonPengeluaran;
     }
 
+    private Button dompet() {
+        // membuat button
+        Button dompet = new Button();
+
+        dompet.setOnAction(v -> {
+            // Hapus konten saat ini di mainLayout
+            mainLayout.setCenter(null);
+            
+            // Membuat objek NumberFormat dengan Locale Indonesia
+            NumberFormat format = NumberFormat.getInstance(Locale.ENGLISH);
+            NumberFormat format1 = NumberFormat.getInstance(Locale.ENGLISH);
+            NumberFormat format2 = NumberFormat.getInstance(Locale.ENGLISH);
+
+            // Mengatur format ribuan
+            format.setGroupingUsed(true);
+            format1.setGroupingUsed(true);
+            format2.setGroupingUsed(true);
+
+            // Mengubah angka total penghasilan menjadi format ribuan
+            String strPenghasilan = format.format(totalPenghasilan);
+            String strPengeluaran = format.format(totalPengeluaran);
+            String strSaldo = format.format(totalPenghasilan - totalPengeluaran);
+
+            // Tampilkan informasi dompet
+            Label labelPenghasilan = new Label("TOTAL PENGHASILAN\n\t  Rp" + strPenghasilan);
+            Label labelPengeluaran = new Label("TOTAL PENGELUARAN\n\t -Rp" + strPengeluaran);
+            Label labelSaldo = new Label("SALDO DOMPET\n     Rp" + strSaldo);
+
+            labelPenghasilan.setStyle("-fx-font-weight: bold; -fx-font-family: Times New Roman;");
+            labelPengeluaran.setStyle("-fx-font-weight: bold; -fx-font-family: Times New Roman;");
+            labelSaldo.setStyle("-fx-font-weight: bold; -fx-font-family: Times New Roman;");
+            
+            // Membuat garis
+            Line lineH = new Line(50, 50, 350, 50);
+            lineH.setStroke(Color.BLACK);
+            lineH.setStrokeWidth(2);
+            lineH.setStrokeLineCap(StrokeLineCap.BUTT);
+            lineH.setStrokeLineJoin(StrokeLineJoin.MITER);
+
+            Line lineV = new Line(100, 180, 100, 250);
+            lineV.setStroke(Color.BLACK);
+            lineV.setStrokeWidth(2);
+            lineV.setStrokeLineCap(StrokeLineCap.BUTT);
+            lineV.setStrokeLineJoin(StrokeLineJoin.MITER);
+
+            HBox hBox = new HBox(20, labelPenghasilan, lineV, labelPengeluaran);
+            hBox.setAlignment(Pos.CENTER);
+
+            VBox vBox = new VBox(hBox);
+            vBox.setAlignment(Pos.CENTER);
+            vBox.setPadding(new Insets(60, 0, 0, 0));
+
+            VBox vBox2 = new VBox(5, lineH, labelSaldo);
+            vBox2.setAlignment(Pos.CENTER);
+
+            VBox vBoxGabung = new VBox(vBox, vBox2);
+            vBoxGabung.setAlignment(Pos.CENTER);
+
+            // Menambahkan dompet card
+            Image image = new Image("/images/dompetCard.png");
+            ImageView bgCard = new ImageView(image);
+
+            bgCard.setFitWidth(400);
+            bgCard.setFitHeight(214);
+
+            // menambahkan Background
+            Image bgImage = new Image("/images/background.jpg");
+            ImageView bgIv = new ImageView(bgImage);
+
+            bgIv.setOpacity(0.5);
+            bgIv.setFitWidth(400);
+            bgIv.setFitHeight(530);
+
+            StackPane content = new StackPane(bgIv, bgCard, vBoxGabung);
+            content.setAlignment(Pos.CENTER);
+
+            // Tambahkan vBox ke konten
+            mainLayout.setCenter(content);
+        });
+
+        // set button Image Icon
+        Image icon = new Image("/images/iconDompet.png");
+        ImageView iconView = new ImageView(icon);
+        iconView.setFitWidth(35);
+        iconView.setFitHeight(35);
+        dompet.setGraphic(iconView);
+        dompet.setContentDisplay(ContentDisplay.LEFT);
+        dompet.setStyle(" -fx-background-color: #34495E;");
+
+        dompet.setOnMouseEntered(e -> {
+            dompet.setText("DOMPET");
+            dompet.setStyle(" -fx-background-color: #3b536b; -fx-font-weight: bold; -fx-font-family: Verdana; -fx-text-fill: white;");
+        });
+
+        dompet.setOnMouseExited(e -> {
+            dompet.setStyle(" -fx-background-color: #34495E;");
+            dompet.setText("");
+        });
+
+        return dompet;
+    }
+    
     @Override
     public String tanggalWaktuNow() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
