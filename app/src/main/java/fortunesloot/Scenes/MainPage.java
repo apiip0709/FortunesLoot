@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import fortunesloot.models.Data;
+import fortunesloot.models.DataUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -23,13 +24,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class MainPage {
+public class MainPage extends Data{
     private Stage primaryStage;
     private BorderPane mainLayout;
     public int totalPenghasilan;
     public int totalPengeluaran;
     private ObservableList<Data> listPenghasilan;
     private ObservableList<Data> listPengeluaran;
+
+    public MainPage(String jenis, int jumlah, String tanggal) {
+        super(jenis, jumlah, tanggal);
+    }
 
     public MainPage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -161,10 +166,8 @@ public class MainPage {
         tambah.setOnAction(v -> {
             String jenis = tfJenis.getText();
             int jumlah = Integer.parseInt(tfJumlah.getText());
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String tanggal = now.format(formatter);
-            listPenghasilan.add(new Data(jenis, jumlah, tanggal));
+            String tanggal = tanggalWaktuNow();
+            listPenghasilan.add(new DataUser(jenis, jumlah, tanggal));
             totalPenghasilan += jumlah;
             tfJenis.clear();
             tfJumlah.clear();
@@ -271,10 +274,8 @@ public class MainPage {
         tambah.setOnAction(v -> {
             String jenis = tfJenis.getText();
             int jumlah = Integer.parseInt(tfJumlah.getText());
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String tanggal = now.format(formatter);
-            listPengeluaran.add(new Data(jenis, jumlah, tanggal));
+            String tanggal = tanggalWaktuNow();
+            listPengeluaran.add(new DataUser(jenis, jumlah, tanggal));
             totalPengeluaran += jumlah;
             tfJenis.clear();
             tfJumlah.clear();
@@ -336,5 +337,11 @@ public class MainPage {
         });
 
         return buttonPengeluaran;
+    }
+
+    @Override
+    public String tanggalWaktuNow() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().format(formatter);
     }
 }
