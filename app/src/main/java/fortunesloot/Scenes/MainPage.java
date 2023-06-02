@@ -1,7 +1,8 @@
 package fortunesloot.Scenes;
 
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import fortunesloot.models.Data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,8 +26,8 @@ import javafx.stage.Stage;
 public class MainPage {
     private Stage primaryStage;
     private BorderPane mainLayout;
-    private int totalPenghasilan;
-    private int totalPengeluaran;
+    public int totalPenghasilan;
+    public int totalPengeluaran;
     private ObservableList<Data> listPenghasilan;
     private ObservableList<Data> listPengeluaran;
 
@@ -124,7 +125,7 @@ public class MainPage {
         // Table Column
         TableColumn<Data, String> column1 = new TableColumn<>("Jenis");
         TableColumn<Data, Integer> column2 = new TableColumn<>("Jumlah");
-        TableColumn<Data, LocalDate> column3 = new TableColumn<>("Tanggal");
+        TableColumn<Data, String> column3 = new TableColumn<>("Tanggal");
 
         // Pasangkan
         column1.setCellValueFactory(new PropertyValueFactory<>("jenis"));
@@ -160,7 +161,9 @@ public class MainPage {
         tambah.setOnAction(v -> {
             String jenis = tfJenis.getText();
             int jumlah = Integer.parseInt(tfJumlah.getText());
-            String tanggal = LocalDate.now().toString();
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String tanggal = now.format(formatter);
             listPenghasilan.add(new Data(jenis, jumlah, tanggal));
             totalPenghasilan += jumlah;
             tfJenis.clear();
@@ -268,7 +271,9 @@ public class MainPage {
         tambah.setOnAction(v -> {
             String jenis = tfJenis.getText();
             int jumlah = Integer.parseInt(tfJumlah.getText());
-            String tanggal = LocalDate.now().toString();
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String tanggal = now.format(formatter);
             listPengeluaran.add(new Data(jenis, jumlah, tanggal));
             totalPengeluaran += jumlah;
             tfJenis.clear();
