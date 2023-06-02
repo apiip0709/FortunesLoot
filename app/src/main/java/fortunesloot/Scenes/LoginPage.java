@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 
-public class Home {
+public class LoginPage {
     private Stage primaryStage;
     private TextField username;
     private PasswordField password;
@@ -21,7 +21,7 @@ public class Home {
     BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK, new CornerRadii(5), null);
     Background background = new Background(backgroundFill);
 
-    public Home(Stage primaryStage) {
+    public LoginPage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
@@ -51,8 +51,8 @@ public class Home {
             String[] nameParts = pass.split(" ");
 
             if (nameParts.length <= 8 || nameParts.length >= 16) {
-                MainPage mainPage = new MainPage(primaryStage);
-                mainPage.show();
+                HomePage homePage = new HomePage(primaryStage);
+                homePage.show();
             } else {
                 System.out.println("Login Failed. Try Again");
             }
