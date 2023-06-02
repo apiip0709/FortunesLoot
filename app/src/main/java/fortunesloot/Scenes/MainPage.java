@@ -2,12 +2,18 @@ package fortunesloot.Scenes;
 
 import java.time.LocalDate;
 
+import fortunesloot.models.Data;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -18,12 +24,16 @@ public class MainPage {
     private BorderPane mainLayout;
     private int totalPenghasilan;
     private int totalPengeluaran;
+    private ObservableList<Data> listPenghasilan;
+    private ObservableList<Data> listPengeluaran;
 
     public MainPage(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.mainLayout = new BorderPane();
         this.totalPenghasilan = 0;
-        this.totalPengeluaran = 0;       
+        this.totalPengeluaran = 0;   
+        this.listPenghasilan = FXCollections.observableArrayList();
+        this.listPengeluaran = FXCollections.observableArrayList();    
     }
 
     public void show() {
@@ -97,6 +107,25 @@ public class MainPage {
     }
 
     private Button buttonPenghasilan() {
+        // Membuat Table View
+        TableView<Data> tableData = new TableView<>();
+        
+        // Table Column
+        TableColumn<Data, String> column1 = new TableColumn<>("Jenis");
+        TableColumn<Data, Integer> column2 = new TableColumn<>("Jumlah");
+        TableColumn<Data, LocalDate> column3 = new TableColumn<>("Tanggal");
+
+        // Pasangkan
+        column1.setCellValueFactory(new PropertyValueFactory<>("jenis"));
+        column2.setCellValueFactory(new PropertyValueFactory<>("jumlah"));
+        column3.setCellValueFactory(new PropertyValueFactory<>("tanggal"));
+
+        // tambah colum ke table
+        tableData.getColumns().addAll(column1, column2, column3);
+
+        // beri nilai
+        tableData.setItems(listPenghasilan);
+        
         // membuat label
         Label label = new Label("PENGHASILAN");
         label.setPadding(new Insets(5, 5, 5, 5));
@@ -124,7 +153,7 @@ public class MainPage {
         hBoxButton.setSpacing(8);
         
         // membuat vBox
-        VBox vBox = new VBox(label, hBoxInput, hBoxButton);
+        VBox vBox = new VBox(label, hBoxInput, hBoxButton, tableData);
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
 
@@ -153,11 +182,30 @@ public class MainPage {
     }
 
     private Button buttonPengeluaran() {
+        // Membuat Table View
+        TableView<Data> tableData = new TableView<>();
+        
+        // Table Column
+        TableColumn<Data, String> column1 = new TableColumn<>("Jenis");
+        TableColumn<Data, Integer> column2 = new TableColumn<>("Jumlah");
+        TableColumn<Data, LocalDate> column3 = new TableColumn<>("Tanggal");
+
+        // Pasangkan
+        column1.setCellValueFactory(new PropertyValueFactory<>("jenis"));
+        column2.setCellValueFactory(new PropertyValueFactory<>("jumlah"));
+        column3.setCellValueFactory(new PropertyValueFactory<>("tanggal"));
+
+        // tambah colum ke table
+        tableData.getColumns().addAll(column1, column2, column3);
+
+        // beri nilai
+        tableData.setItems(listPengeluaran);
+
         // membuat label
         Label label = new Label("PENGELUARAN");
         label.setPadding(new Insets(5, 5, 5, 5));
         label.setFont(Font.font(20));
-        label.setStyle(" -fx-background-color: #00ff15e0; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Verdana;");
+        label.setStyle(" -fx-background-color: red; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Verdana;");
 
         // membuat textfield lalu disimpan di hBox
         TextField tfJenis = new TextField();
@@ -180,7 +228,7 @@ public class MainPage {
         hBoxButton.setSpacing(8);
         
         // membuat vBox
-        VBox vBox = new VBox(label, hBoxInput, hBoxButton);
+        VBox vBox = new VBox(label, hBoxInput, hBoxButton, tableData);
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
 
