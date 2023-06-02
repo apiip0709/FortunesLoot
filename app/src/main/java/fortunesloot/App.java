@@ -1,6 +1,6 @@
 package fortunesloot;
 
-import fortunesloot.Scenes.Home;
+import fortunesloot.Scenes.LoginPage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -8,7 +8,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Home home = new Home(primaryStage);
+        LoginPage home = new LoginPage(primaryStage);
         home.show();
 
         primaryStage.setTitle("Fortune's Loot");
