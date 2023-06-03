@@ -54,7 +54,7 @@ public class MainPage extends DataUser{
         List<DataUser> dataPengeluaran = Datadb.getAll("dataPengeluaran");
 
         listPenghasilan.addAll(dataPenghasilan);
-        listPengeluaran.addAll(dataPengeluaran);
+        listPenghasilan.addAll(dataPengeluaran);
 
         // Menghitung total yang ada dalam list
         totalPenghasilan = hitungTotalPenghasilan(dataPenghasilan);
