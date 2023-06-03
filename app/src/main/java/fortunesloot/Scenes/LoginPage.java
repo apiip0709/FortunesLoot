@@ -46,14 +46,13 @@ public class LoginPage {
         TextField usernameField = new TextField();
         usernameField.setStyle("-fx-prompt-text-fill: gray; -fx-background-color: #F4F4F4; -fx-border-color: #A9A9A9; -fx-border-width: 1px; -fx-border-radius: 5px;");
         usernameField.setFont(Font.font("Arial", 14));
-        usernameField.setMinWidth(200);
+        usernameField.setPrefWidth(200);
 
         Label passwordLabel = new Label("Password");
         passwordLabel.setStyle("-fx-font-size: 18; -fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-text-fill: #000000;");
         PasswordField passwordField = new PasswordField();
         passwordField.setStyle("-fx-prompt-text-fill: gray; -fx-background-color: #F4F4F4; -fx-border-color: #A9A9A9; -fx-border-width: 1px; -fx-border-radius: 5px;");
         passwordField.setFont(Font.font("Arial", 14));
-        passwordField.setMinWidth(200);
 
         Button loginButton = new Button("Login");
         Button registButton = new Button("Regist");
@@ -68,6 +67,7 @@ public class LoginPage {
 
         HBox hBoxBtn = new HBox(15, loginButton, registButton);
 
+        // Menambahkan vBox ke dalam GridPane
         gridPane.add(vBoxUser, 0, 1);
         gridPane.add(vBoxPass, 0, 2);
         gridPane.add(hBoxBtn, 0, 3);

@@ -12,7 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -29,43 +35,61 @@ public class RegistPage {
     public void show() {
         // Membuat GridPane sebagai layout
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.TOP_LEFT);
-        grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.setAlignment(Pos.CENTER);
 
         // Membuat elemen-elemen UI
         // Label, TextField, Button
         Label nameLabel = new Label("Masukkan Nama Lengkap");
+        nameLabel.setStyle("-fx-font-size: 15; -fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-text-fill: #000000;");
         TextField nameField = new TextField();
+        nameField.setStyle("-fx-prompt-text-fill: gray; -fx-background-color: #F4F4F4; -fx-border-color: #A9A9A9; -fx-border-width: 1px; -fx-border-radius: 5px;");
+        nameField.setFont(Font.font("Arial", 14));
 
         Label ageLabel = new Label("Masukkan Umur");
+        ageLabel.setStyle("-fx-font-size: 15; -fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-text-fill: #000000;");
         TextField ageField = new TextField();
+        ageField.setStyle("-fx-prompt-text-fill: gray; -fx-background-color: #F4F4F4; -fx-border-color: #A9A9A9; -fx-border-width: 1px; -fx-border-radius: 5px;");
+        ageField.setFont(Font.font("Arial", 14));
 
         Label usernameLabel = new Label("Masukkan Username");
+        usernameLabel.setStyle("-fx-font-size: 15; -fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-text-fill: #000000;");
         TextField usernameField = new TextField();
+        usernameField.setStyle("-fx-prompt-text-fill: gray; -fx-background-color: #F4F4F4; -fx-border-color: #A9A9A9; -fx-border-width: 1px; -fx-border-radius: 5px;");
+        usernameField.setFont(Font.font("Arial", 14));
+        usernameField.setPrefWidth(320);
 
         Label passwordLabel = new Label("Masukkan Password");
+        passwordLabel.setStyle("-fx-font-size: 15; -fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-text-fill: #000000;");
         TextField passwordField = new TextField();
+        passwordField.setStyle("-fx-prompt-text-fill: gray; -fx-background-color: #F4F4F4; -fx-border-color: #A9A9A9; -fx-border-width: 1px; -fx-border-radius: 5px;");
+        passwordField.setFont(Font.font("Arial", 14));
 
         Button registerButton = new Button("Register");
         Button backButton = new Button("Back");
 
         Label errorLabel = new Label();
+        errorLabel.setStyle("-fx-font-size: 12; -fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-text-fill: #ff0000;");
         errorLabel.setVisible(false);
 
+        // Menambahkan elemen-elemen ke dalam VBox
+        VBox vBoxName = new VBox(5, nameLabel, nameField);
+        VBox vBoxAge = new VBox(5, ageLabel, ageField);
+        VBox vBoxUser = new VBox(5, usernameLabel, usernameField);
+        VBox vBoxPass = new VBox(5, passwordLabel, passwordField, errorLabel);
+
+        HBox hBoxBtn = new HBox(15, backButton, registerButton);
+
         // Menambahkan elemen-elemen ke dalam GridPane
-        grid.add(nameLabel, 0, 0);
-        grid.add(nameField, 0, 1);
-        grid.add(ageLabel, 0, 2);
-        grid.add(ageField, 0, 3);
-        grid.add(usernameLabel, 0, 4);
-        grid.add(usernameField, 0, 5);
-        grid.add(passwordLabel, 0, 6);
-        grid.add(passwordField, 0, 7);
-        grid.add(errorLabel, 0, 8);
-        grid.add(registerButton, 0, 9);
-        grid.add(backButton, 0, 10);
+        grid.add(vBoxName, 0, 0);
+        grid.add(vBoxAge, 0, 1);
+        grid.add(vBoxUser, 0, 2);
+        grid.add(vBoxPass, 0, 3);
+        grid.add(hBoxBtn, 0, 4);
+
+        VBox vBoxAll = new VBox(grid);
+        vBoxAll.setAlignment(Pos.BOTTOM_LEFT);
+        vBoxAll.setPadding(new Insets(0, 0, 70, 0));
 
         // Menambahkan event handler untuk tombol daftar
         registerButton.setOnAction(v -> {
@@ -145,8 +169,17 @@ public class RegistPage {
             lp.show();
         });
 
+        // menambahkan background
+        Image bgImage = new Image("/images/bgRegist.png");
+        ImageView bgIv = new ImageView(bgImage);
+
+        bgIv.setOpacity(0.8);
+        bgIv.setFitWidth(400);
+        bgIv.setFitHeight(650);
+
         // scene
-        Scene scene = new Scene(grid, 400, 650);
+        StackPane sp = new StackPane(bgIv, vBoxAll);
+        Scene scene = new Scene(sp, 400, 650);
         primaryStage.setScene(scene);
         primaryStage.show();
         Registdb.closeConnection();
