@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class DataUser extends AbsData {
 
+    public DataUser(){}
+    
     public DataUser(String jenis, int jumlah, String tanggal) {
         super(jenis, jumlah, tanggal);
     }

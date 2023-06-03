@@ -1,7 +1,6 @@
 package fortunesloot.Scenes;
 
 import java.sql.SQLException;
-
 import fortunesloot.models.DataRegist;
 import fortunesloot.utils.Registdb;
 import javafx.animation.PauseTransition;
@@ -28,8 +27,6 @@ public class RegistPage {
     }
 
     public void show() {
-        primaryStage.setTitle("Registration Page");
-        
         // Membuat GridPane sebagai layout
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_LEFT);
@@ -38,6 +35,7 @@ public class RegistPage {
         grid.setPadding(new Insets(25, 25, 25, 25));
 
         // Membuat elemen-elemen UI
+        // Label, TextField, Button
         Label nameLabel = new Label("Masukkan Nama Lengkap");
         TextField nameField = new TextField();
 
@@ -76,6 +74,7 @@ public class RegistPage {
             String username = usernameField.getText();
             String password = passwordField.getText();
 
+            // kondisi apabila ada textfield belum terisi
             if (namaLengkap.isEmpty()||umurStr.isEmpty()||username.isEmpty()||password.isEmpty()) {
                 errorLabel.setText("Isi Terlebih Dahulu");
                 errorLabel.setVisible(true);
@@ -85,6 +84,7 @@ public class RegistPage {
                 pause.setOnFinished(event -> errorLabel.setVisible(false));
                 pause.play();
             } else {
+                // Mendapatkan list semua pengguna dari database
                 int umur = Integer.parseInt(umurStr);
                 registDb = new Registdb();
                 try {
@@ -92,8 +92,9 @@ public class RegistPage {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                
+                // Mengecek apakah username sudah ada dalam listUser
                 boolean confirm = false;
-
                 for (DataRegist userLoop : listUser) {
                     if (userLoop.getUsername().equals(username)) {
                         confirm = true;
@@ -101,7 +102,6 @@ public class RegistPage {
                     }
                 }
 
-                // Mengecek apakah username sudah ada dalam listUser
                 if (confirm) {
                     // Jika username sudah ada, tampilkan pesan kesalahan
                     errorLabel.setText("Username sudah digunakan!");
@@ -124,7 +124,7 @@ public class RegistPage {
                     // Menyimpan data ke dalam database
                     Registdb.saveData(namaLengkap, umur, username, password);
 
-                    errorLabel.setText("Berhasil Login!");
+                    errorLabel.setText("Berhasil Register!");
                     errorLabel.setVisible(true);
 
                     // Membuat PauseTransition untuk mengubah visibilitas Label setelah 3 detik
@@ -145,6 +145,7 @@ public class RegistPage {
             lp.show();
         });
 
+        // scene
         Scene scene = new Scene(grid, 400, 650);
         primaryStage.setScene(scene);
         primaryStage.show();

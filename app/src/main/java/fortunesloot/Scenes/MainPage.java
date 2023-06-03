@@ -1,12 +1,12 @@
 package fortunesloot.Scenes;
 
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
-import fortunesloot.models.AbsData;
 import fortunesloot.models.DataUser;
+import fortunesloot.utils.Datadb;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.*;
@@ -25,13 +25,15 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class MainPage extends AbsData{
+public class MainPage extends DataUser{
     private Stage primaryStage;
     private BorderPane mainLayout;
     public int totalPenghasilan;
     public int totalPengeluaran;
-    private ObservableList<AbsData> listPenghasilan;
-    private ObservableList<AbsData> listPengeluaran;
+    private ObservableList<DataUser> listPenghasilan;
+    private ObservableList<DataUser> listPengeluaran;
+    private Datadb dataPenghasilan;
+    private Datadb dataPengeluaran;
 
     public MainPage(String jenis, int jumlah, String tanggal) {
         super(jenis, jumlah, tanggal);
@@ -50,6 +52,17 @@ public class MainPage extends AbsData{
         // Tampilan scene ditambah header dan sideBar
         HBox header = header();
         HBox sidebar = sideBar();
+
+        // Connect to DataBase
+        Datadb.connection();
+        dataPenghasilan = new Datadb();
+        dataPengeluaran = new Datadb();
+        try {
+            listPenghasilan.addAll(dataPenghasilan.getAll("dataPenghasilan"));
+            listPengeluaran.addAll(dataPengeluaran.getAll("dataPengeluaran"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // Content
         Label contentLabel = new Label("Welcome to Financial App!");
@@ -74,9 +87,12 @@ public class MainPage extends AbsData{
 
 
     private HBox header() {
+        // membuat header
         Label titleLabel = new Label("Fortune's Loot");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         titleLabel.setTextFill(Color.WHITE);
+
+        // layout header
         HBox header = new HBox(titleLabel);
         header.setStyle("-fx-background-color: #2C3E50;");
         header.setPadding(new Insets(20));
@@ -86,7 +102,7 @@ public class MainPage extends AbsData{
     }
     
     private HBox sideBar() {
-        // Sidebar
+        // membuat sidebar
         Button exitButton = new Button("");
         Button buttonPenghasilan = buttonPenghasilan();
         Button buttonPengeluaran = buttonPengeluaran();
@@ -116,6 +132,7 @@ public class MainPage extends AbsData{
             exitButton.setStyle(" -fx-background-color: #34495E;");
         });
 
+        // layout sidebar
         HBox sidebar = new HBox(exitButton, buttonPenghasilan, buttonPengeluaran, buttonDompet);
         sidebar.setStyle("-fx-background-color: #34495E;");
         sidebar.setSpacing(10);
@@ -127,12 +144,12 @@ public class MainPage extends AbsData{
 
     private Button buttonPenghasilan() {
         // Membuat Table View
-        TableView<AbsData> tableData = new TableView<>();
+        TableView<DataUser> tableData = new TableView<>();
         
         // Table Column
-        TableColumn<AbsData, String> column1 = new TableColumn<>("Jenis");
-        TableColumn<AbsData, Integer> column2 = new TableColumn<>("Jumlah");
-        TableColumn<AbsData, String> column3 = new TableColumn<>("Tanggal");
+        TableColumn<DataUser, String> column1 = new TableColumn<>("Jenis");
+        TableColumn<DataUser, Integer> column2 = new TableColumn<>("Jumlah");
+        TableColumn<DataUser, String> column3 = new TableColumn<>("Tanggal");
 
         // Pasangkan
         column1.setCellValueFactory(new PropertyValueFactory<>("jenis"));
@@ -173,14 +190,21 @@ public class MainPage extends AbsData{
             totalPenghasilan += jumlah;
             tfJenis.clear();
             tfJumlah.clear();
+
+            // Simpan data di database
+            Datadb.saveData("dataPenghasilan", jenis, jumlah, tanggal);
         });
         
         Button delete = new Button("Delete");
         delete.setOnAction(v -> {
             int index = tableData.getSelectionModel().getSelectedIndex();
+            DataUser selectedData = listPenghasilan.get(index);
             int jumlah = listPenghasilan.get(index).getJumlah();
             listPenghasilan.remove(index);
             totalPenghasilan -= jumlah;
+
+            // Delete data dari database
+            Datadb.deleteData("dataPenghasilan", selectedData);
         });
 
         HBox hBoxButton = new HBox(tambah, delete);
@@ -235,12 +259,12 @@ public class MainPage extends AbsData{
 
     private Button buttonPengeluaran() {
         // Membuat Table View
-        TableView<AbsData> tableData = new TableView<>();
+        TableView<DataUser> tableData = new TableView<>();
         
         // Table Column
-        TableColumn<AbsData, String> column1 = new TableColumn<>("Jenis");
-        TableColumn<AbsData, Integer> column2 = new TableColumn<>("Jumlah");
-        TableColumn<AbsData, LocalDate> column3 = new TableColumn<>("Tanggal");
+        TableColumn<DataUser, String> column1 = new TableColumn<>("Jenis");
+        TableColumn<DataUser, Integer> column2 = new TableColumn<>("Jumlah");
+        TableColumn<DataUser, LocalDate> column3 = new TableColumn<>("Tanggal");
 
         // Pasangkan
         column1.setCellValueFactory(new PropertyValueFactory<>("jenis"));
@@ -281,14 +305,21 @@ public class MainPage extends AbsData{
             totalPengeluaran += jumlah;
             tfJenis.clear();
             tfJumlah.clear();
+
+            // simpan data di database
+            Datadb.saveData("dataPengeluaran", jenis, jumlah, tanggal);
         });
 
         Button delete = new Button("Delete");
         delete.setOnAction(v -> {
             int index = tableData.getSelectionModel().getSelectedIndex();
+            DataUser selectedData = listPengeluaran.get(index);
             int jumlah = listPengeluaran.get(index).getJumlah();
             listPengeluaran.remove(index);
             totalPengeluaran -= jumlah;
+
+            // Delete data dari database
+            Datadb.deleteData("dataPengeluaran", selectedData);
         });
         
         HBox hBoxButton = new HBox(tambah, delete);
@@ -386,6 +417,7 @@ public class MainPage extends AbsData{
             lineV.setStrokeLineCap(StrokeLineCap.BUTT);
             lineV.setStrokeLineJoin(StrokeLineJoin.MITER);
 
+            // layout dompet
             HBox hBox = new HBox(20, labelPenghasilan, lineV, labelPengeluaran);
             hBox.setAlignment(Pos.CENTER);
 
@@ -430,6 +462,7 @@ public class MainPage extends AbsData{
         dompet.setContentDisplay(ContentDisplay.LEFT);
         dompet.setStyle(" -fx-background-color: #34495E;");
 
+        // efek button
         dompet.setOnMouseEntered(e -> {
             dompet.setText("DOMPET");
             dompet.setStyle(" -fx-background-color: #3b536b; -fx-font-weight: bold; -fx-font-family: Verdana; -fx-text-fill: white;");
@@ -441,11 +474,5 @@ public class MainPage extends AbsData{
         });
 
         return dompet;
-    }
-    
-    @Override
-    public String tanggalWaktuNow() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.now().format(formatter);
     }
 }

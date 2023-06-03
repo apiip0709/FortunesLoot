@@ -67,6 +67,7 @@ public class HomePage {
             buttonExit.setStyle("-fx-background-color: transparent; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: black;");
         });
 
+        // layout HomePage
         VBox vBox = new VBox(110, buttonMain, buttonExit);
         vBox.setAlignment(Pos.CENTER);
         VBox vBox2 = new VBox(360, label, vBox);
