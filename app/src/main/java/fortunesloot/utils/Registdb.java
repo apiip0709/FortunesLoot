@@ -99,4 +99,20 @@ public class Registdb {
             e.printStackTrace();
         }
     }
+
+    public static void closeConnection() {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }    
 }

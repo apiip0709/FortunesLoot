@@ -31,12 +31,7 @@ public class Datadb {
         return connection;
     }    
 
-    public Datadb() {
-        connection = connection();
-        setupTable();
-    }
-
-    private void setupTable() {
+    public static void setupTable() {
         try {
             DatabaseMetaData meta = connection.getMetaData();
             ResultSet rs1 = meta.getTables(null, null, "dataPenghasilan", null);
@@ -67,7 +62,7 @@ public class Datadb {
         }
     }
 
-    public List<DataUser> getAll(String tableName) throws SQLException {
+    public static List<DataUser> getAll(String tableName) {
         List<DataUser> dataList = new ArrayList<>();
         try {
             String selectQuery = "SELECT * FROM " + tableName;

@@ -149,5 +149,6 @@ public class RegistPage {
         Scene scene = new Scene(grid, 400, 650);
         primaryStage.setScene(scene);
         primaryStage.show();
+        Registdb.closeConnection();
     }
 }

@@ -1,6 +1,5 @@
 package fortunesloot.Scenes;
 
-import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -32,12 +31,6 @@ public class MainPage extends DataUser{
     public int totalPengeluaran;
     private ObservableList<DataUser> listPenghasilan;
     private ObservableList<DataUser> listPengeluaran;
-    private Datadb dataPenghasilan;
-    private Datadb dataPengeluaran;
-
-    public MainPage(String jenis, int jumlah, String tanggal) {
-        super(jenis, jumlah, tanggal);
-    }
 
     public MainPage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -55,14 +48,17 @@ public class MainPage extends DataUser{
 
         // Connect to DataBase
         Datadb.connection();
-        dataPenghasilan = new Datadb();
-        dataPengeluaran = new Datadb();
-        try {
-            listPenghasilan.addAll(dataPenghasilan.getAll("dataPenghasilan"));
-            listPengeluaran.addAll(dataPengeluaran.getAll("dataPengeluaran"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Datadb.setupTable();
+
+        List<DataUser> dataPenghasilan = Datadb.getAll("dataPenghasilan");
+        List<DataUser> dataPengeluaran = Datadb.getAll("dataPengeluaran");
+
+        listPenghasilan.addAll(dataPenghasilan);
+        listPengeluaran.addAll(dataPengeluaran);
+
+        // Menghitung total yang ada dalam list
+        totalPenghasilan = hitungTotalPenghasilan(dataPenghasilan);
+        totalPengeluaran = hitungTotalPengeluaran(dataPengeluaran);
 
         // Content
         Label contentLabel = new Label("Welcome to Financial App!");
@@ -474,5 +470,21 @@ public class MainPage extends DataUser{
         });
 
         return dompet;
+    }
+
+    private int hitungTotalPenghasilan(List<DataUser> dataPenghasilan) {
+        int totalPenghasilan = 0;
+        for (DataUser data : dataPenghasilan) {
+            totalPenghasilan += data.getJumlah();
+        }
+        return totalPenghasilan;
+    }
+    
+    private int hitungTotalPengeluaran(List<DataUser> dataPengeluaran) {
+        int totalPengeluaran = 0;
+        for (DataUser data : dataPengeluaran) {
+            totalPengeluaran += data.getJumlah();
+        }
+        return totalPengeluaran;
     }
 }
