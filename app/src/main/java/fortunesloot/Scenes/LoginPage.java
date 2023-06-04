@@ -67,7 +67,7 @@ public class LoginPage {
 
         HBox hBoxBtn = new HBox(15, loginButton, registButton);
 
-        // Menambahkan vBox ke dalam GridPane
+        // Menambahkan vBox ke dalam GridPane lalu simpan ke vBoxAll
         gridPane.add(vBoxUser, 0, 1);
         gridPane.add(vBoxPass, 0, 2);
         gridPane.add(hBoxBtn, 0, 3);
@@ -129,6 +129,7 @@ public class LoginPage {
             }
         });
 
+        // action button Regist
         registButton.setOnAction(v -> {
             RegistPage rp = new RegistPage(primaryStage);
             rp.show();

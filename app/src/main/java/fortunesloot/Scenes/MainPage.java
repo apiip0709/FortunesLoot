@@ -50,13 +50,14 @@ public class MainPage extends DataUser{
         Datadb.connection();
         Datadb.setupTable();
 
+        // mengambil keseluruhan data dari isi database 
         List<DataUser> dataPenghasilan = Datadb.getAll("dataPenghasilan");
         List<DataUser> dataPengeluaran = Datadb.getAll("dataPengeluaran");
 
         listPenghasilan.addAll(dataPenghasilan);
-        listPenghasilan.addAll(dataPengeluaran);
+        listPengeluaran.addAll(dataPengeluaran); 
 
-        // Menghitung total yang ada dalam list
+        // Menghitung total yang ada dalam list 
         totalPenghasilan = hitungTotalPenghasilan(dataPenghasilan);
         totalPengeluaran = hitungTotalPengeluaran(dataPengeluaran);
 
@@ -80,7 +81,6 @@ public class MainPage extends DataUser{
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 
     private HBox header() {
         // membuat header
@@ -112,6 +112,7 @@ public class MainPage extends DataUser{
         exitButton.setGraphic(iconView);
         exitButton.setContentDisplay(ContentDisplay.LEFT);
         exitButton.setStyle(" -fx-background-color: #34495E; -fx-text-fill: white;");
+
         // Set Action button
         exitButton.setOnAction(v -> {
             HomePage home = new HomePage(primaryStage);
@@ -176,7 +177,7 @@ public class MainPage extends DataUser{
         HBox hBoxInput = new HBox(tfJenis, tfJumlah);
         hBoxInput.setSpacing(8);
         
-        // membuat button lalu disimpan di hBox
+        // membuat button dan action button
         Button tambah = new Button("Tambah");
         tambah.setOnAction(v -> {
             String jenis = tfJenis.getText();
@@ -203,6 +204,7 @@ public class MainPage extends DataUser{
             Datadb.deleteData("dataPenghasilan", selectedData);
         });
 
+        // button disimpan dalam hBox
         HBox hBoxButton = new HBox(tambah, delete);
         hBoxButton.setSpacing(8);
         
@@ -221,7 +223,7 @@ public class MainPage extends DataUser{
 
         StackPane content = new StackPane(bgIv, vBox);
 
-        // set button Image Icon
+        // set button penghasilan Image Icon
         Button buttonPenghasilan = new Button();
         Image icon = new Image("/images/iconHasil.png");
         ImageView iconView = new ImageView(icon);
@@ -231,12 +233,12 @@ public class MainPage extends DataUser{
         buttonPenghasilan.setContentDisplay(ContentDisplay.LEFT);
         buttonPenghasilan.setStyle(" -fx-background-color: #34495E;");
 
-        // action button
+        // action button Penghasilan
         buttonPenghasilan.setOnAction(e -> {
             // Hapus konten saat ini di mainLayout
             mainLayout.setCenter(null);
 
-            // Tambahkan tableData ke konten
+            // Tambahkan content ke mainLayout
             mainLayout.setCenter(content);
         });
 
@@ -291,7 +293,7 @@ public class MainPage extends DataUser{
         HBox hBoxInput = new HBox(tfJenis, tfJumlah);
         hBoxInput.setSpacing(8);
         
-        // membuat button lalu disimpan di hBox
+        // membuat button dan action button
         Button tambah = new Button("Tambah");
         tambah.setOnAction(v -> {
             String jenis = tfJenis.getText();
@@ -318,6 +320,7 @@ public class MainPage extends DataUser{
             Datadb.deleteData("dataPengeluaran", selectedData);
         });
         
+        // button disimpan dalam hBox
         HBox hBoxButton = new HBox(tambah, delete);
         hBoxButton.setSpacing(8);
         
@@ -336,7 +339,7 @@ public class MainPage extends DataUser{
 
         StackPane content = new StackPane(bgIv, vBox);
         
-        // set button Image Icon
+        // set button pengeluaran Image Icon
         Button buttonPengeluaran = new Button();
         Image icon = new Image("/images/iconKeluar.png");
         ImageView iconView = new ImageView(icon);
@@ -346,12 +349,12 @@ public class MainPage extends DataUser{
         buttonPengeluaran.setContentDisplay(ContentDisplay.LEFT);
         buttonPengeluaran.setStyle(" -fx-background-color: #34495E;");
 
-        // action button
+        // action button pengeluaran
         buttonPengeluaran.setOnAction(e -> {
             // Hapus konten saat ini di mainLayout
             mainLayout.setCenter(null);
 
-            // Tambahkan tableData ke konten
+            // Tambahkan conten ke mainLayout
             mainLayout.setCenter(content);
         });
 
@@ -376,15 +379,11 @@ public class MainPage extends DataUser{
             // Hapus konten saat ini di mainLayout
             mainLayout.setCenter(null);
             
-            // Membuat objek NumberFormat dengan Locale Indonesia
+            // Membuat objek NumberFormat dengan Locale English
             NumberFormat format = NumberFormat.getInstance(Locale.ENGLISH);
-            NumberFormat format1 = NumberFormat.getInstance(Locale.ENGLISH);
-            NumberFormat format2 = NumberFormat.getInstance(Locale.ENGLISH);
 
             // Mengatur format ribuan
             format.setGroupingUsed(true);
-            format1.setGroupingUsed(true);
-            format2.setGroupingUsed(true);
 
             // Mengubah angka total penghasilan menjadi format ribuan
             String strPenghasilan = format.format(totalPenghasilan);
@@ -392,9 +391,9 @@ public class MainPage extends DataUser{
             String strSaldo = format.format(totalPenghasilan - totalPengeluaran);
 
             // Tampilkan informasi dompet
-            Label labelPenghasilan = new Label("TOTAL PENGHASILAN\n\t  Rp" + strPenghasilan);
-            Label labelPengeluaran = new Label("TOTAL PENGELUARAN\n\t -Rp" + strPengeluaran);
-            Label labelSaldo = new Label("SALDO DOMPET\n     Rp" + strSaldo);
+            Label labelPenghasilan = new Label("TOTAL PENGHASILAN\n\t  Rp " + strPenghasilan);
+            Label labelPengeluaran = new Label("TOTAL PENGELUARAN\n\t -Rp " + strPengeluaran);
+            Label labelSaldo = new Label("SALDO DOMPET\n     Rp " + strSaldo);
 
             labelPenghasilan.setStyle("-fx-font-weight: bold; -fx-font-family: Times New Roman;");
             labelPengeluaran.setStyle("-fx-font-weight: bold; -fx-font-family: Times New Roman;");
@@ -445,7 +444,7 @@ public class MainPage extends DataUser{
             StackPane content = new StackPane(bgIv, bgCard, vBoxGabung);
             content.setAlignment(Pos.CENTER);
 
-            // Tambahkan vBox ke konten
+            // Tambahkan content ke mainLayout
             mainLayout.setCenter(content);
         });
 
@@ -458,7 +457,7 @@ public class MainPage extends DataUser{
         dompet.setContentDisplay(ContentDisplay.LEFT);
         dompet.setStyle(" -fx-background-color: #34495E;");
 
-        // efek button
+        // action efek button
         dompet.setOnMouseEntered(e -> {
             dompet.setText("DOMPET");
             dompet.setStyle(" -fx-background-color: #3b536b; -fx-font-weight: bold; -fx-font-family: Verdana; -fx-text-fill: white;");
@@ -470,21 +469,5 @@ public class MainPage extends DataUser{
         });
 
         return dompet;
-    }
-
-    private int hitungTotalPenghasilan(List<DataUser> dataPenghasilan) {
-        int totalPenghasilan = 0;
-        for (DataUser data : dataPenghasilan) {
-            totalPenghasilan += data.getJumlah();
-        }
-        return totalPenghasilan;
-    }
-    
-    private int hitungTotalPengeluaran(List<DataUser> dataPengeluaran) {
-        int totalPengeluaran = 0;
-        for (DataUser data : dataPengeluaran) {
-            totalPengeluaran += data.getJumlah();
-        }
-        return totalPengeluaran;
     }
 }
