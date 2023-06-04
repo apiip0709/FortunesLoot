@@ -201,13 +201,8 @@ public class MainPage extends DataUser {
         tfJumlah.setPromptText("Berapa Banyak");
         HBox hBoxInput = new HBox(tfJenis, tfJumlah);
         hBoxInput.setSpacing(8);
-<<<<<<< HEAD
 
         // membuat button lalu disimpan di hBox
-=======
-        
-        // membuat button dan action button
->>>>>>> 2363516fb25be39fad1010806643589f392de631
         Button tambah = new Button("Tambah");
         tambah.setOnAction(v -> {
             String jenis = tfJenis.getText();
@@ -324,13 +319,8 @@ public class MainPage extends DataUser {
         tfJumlah.setPromptText("Berapa Banyak");
         HBox hBoxInput = new HBox(tfJenis, tfJumlah);
         hBoxInput.setSpacing(8);
-<<<<<<< HEAD
 
         // membuat button lalu disimpan di hBox
-=======
-        
-        // membuat button dan action button
->>>>>>> 2363516fb25be39fad1010806643589f392de631
         Button tambah = new Button("Tambah");
         tambah.setOnAction(v -> {
             String jenis = tfJenis.getText();
@@ -356,12 +346,8 @@ public class MainPage extends DataUser {
             // Delete data dari database
             Datadb.deleteData("dataPengeluaran", selectedData);
         });
-<<<<<<< HEAD
-
-=======
         
         // button disimpan dalam hBox
->>>>>>> 2363516fb25be39fad1010806643589f392de631
         HBox hBoxButton = new HBox(tambah, delete);
         hBoxButton.setSpacing(8);
 
@@ -379,13 +365,8 @@ public class MainPage extends DataUser {
         bgIv.setFitHeight(530);
 
         StackPane content = new StackPane(bgIv, vBox);
-<<<<<<< HEAD
 
-        // set button Image Icon
-=======
-        
         // set button pengeluaran Image Icon
->>>>>>> 2363516fb25be39fad1010806643589f392de631
         Button buttonPengeluaran = new Button();
         Image icon = new Image("/images/iconKeluar.png");
         ImageView iconView = new ImageView(icon);
@@ -425,13 +406,8 @@ public class MainPage extends DataUser {
         dompet.setOnAction(v -> {
             // Hapus konten saat ini di mainLayout
             mainLayout.setCenter(null);
-<<<<<<< HEAD
 
-            // Membuat objek NumberFormat dengan Locale Indonesia
-=======
-            
             // Membuat objek NumberFormat dengan Locale English
->>>>>>> 2363516fb25be39fad1010806643589f392de631
             NumberFormat format = NumberFormat.getInstance(Locale.ENGLISH);
 
             // Mengatur format ribuan
@@ -523,23 +499,4 @@ public class MainPage extends DataUser {
 
         return dompet;
     }
-<<<<<<< HEAD
-
-    private int hitungTotalPenghasilan(List<DataUser> dataPenghasilan) {
-        int totalPenghasilan = 0;
-        for (DataUser data : dataPenghasilan) {
-            totalPenghasilan += data.getJumlah();
-        }
-        return totalPenghasilan;
-    }
-
-    private int hitungTotalPengeluaran(List<DataUser> dataPengeluaran) {
-        int totalPengeluaran = 0;
-        for (DataUser data : dataPengeluaran) {
-            totalPengeluaran += data.getJumlah();
-        }
-        return totalPengeluaran;
-    }
-=======
->>>>>>> 2363516fb25be39fad1010806643589f392de631
 }
