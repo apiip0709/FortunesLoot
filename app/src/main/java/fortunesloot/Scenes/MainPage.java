@@ -32,9 +32,6 @@ public class MainPage extends DataUser {
     private ObservableList<DataUser> listPenghasilan;
     private ObservableList<DataUser> listPengeluaran;
 
-    BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK, new CornerRadii(5), null);
-    Background background = new Background(backgroundFill);
-
     public MainPage(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.mainLayout = new BorderPane();
@@ -70,24 +67,26 @@ public class MainPage extends DataUser {
         contentLabel.setAlignment(Pos.TOP_CENTER);
         // contentLabel.setPadding(new Insets(50));
 
+        // membuat deskripsi apk
         String desk = "Deskripsi : Aplikasi ini bisa membantu dalam hal mengatur keuanganmu. Dengan aplikasi ini, kamu bisa dengan mudah memasukkan biaya pemasukan dan pengeluaranmu. Memudahkan para pengguna dalam mengatur keuangan mereka. ";
 
         Label apl = new Label(desk);
+        apl.setFont(Font.font("Arial", 5));
         apl.setWrapText(true);
         apl.setPadding(new Insets(0, 25, 0, 25));
         apl.setTextAlignment(TextAlignment.JUSTIFY);
         apl.setAlignment(Pos.CENTER);
         apl.setStyle("-fx-font-size: 11px; -fx-text-fill: black;");
+
+        // menambah logo apk
         Image logoImage = new Image("/images/MainLogo.png");
         ImageView logoImageView = new ImageView(logoImage);
         logoImageView.setPreserveRatio(true);
         logoImageView.setFitWidth(500);
         
-
         VBox content = new VBox(contentLabel, apl);
         content.setAlignment(Pos.CENTER);
         content.setSpacing(300);
-
 
         // Main Layout
         BorderPane mainLayout = new BorderPane();
@@ -97,7 +96,6 @@ public class MainPage extends DataUser {
         this.mainLayout = mainLayout;
 
         StackPane logo = new StackPane(logoImageView, mainLayout);
-
 
         // Scene
         Scene scene = new Scene(logo, 400, 650);
@@ -143,7 +141,7 @@ public class MainPage extends DataUser {
         });
 
         exitButton.setOnMouseEntered(e -> {
-            exitButton.setText("EXIT");
+            exitButton.setText("BACK");
             exitButton.setStyle(
                     " -fx-background-color: #3b536b; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Verdana;");
         });

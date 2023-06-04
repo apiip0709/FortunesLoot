@@ -2,6 +2,7 @@ package fortunesloot;
 
 import fortunesloot.Scenes.LoginPage;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -12,6 +13,8 @@ public class App extends Application {
         home.show();
 
         primaryStage.setTitle("Fortune's Loot");
+        Image logo = new Image("/images/logoapp.png");
+        primaryStage.getIcons().add(logo);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
