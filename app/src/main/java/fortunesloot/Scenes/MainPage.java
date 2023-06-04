@@ -307,8 +307,7 @@ public class MainPage extends DataUser {
         Label label = new Label("PENGELUARAN");
         label.setPadding(new Insets(5, 5, 5, 5));
         label.setFont(Font.font(20));
-        label.setStyle(
-                " -fx-background-color: red; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Verdana;");
+        label.setStyle(" -fx-background-color: red; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Verdana;");
 
         // membuat textfield lalu disimpan di hBox
         TextField tfJenis = new TextField();
@@ -385,8 +384,7 @@ public class MainPage extends DataUser {
 
         buttonPengeluaran.setOnMouseEntered(e -> {
             buttonPengeluaran.setText("PENGELUARAN");
-            buttonPengeluaran.setStyle(
-                    " -fx-background-color: #3b536b; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-family: Verdana;");
+            buttonPengeluaran.setStyle(" -fx-background-color: #3b536b; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-family: Verdana;");
         });
 
         buttonPengeluaran.setOnMouseExited(e -> {

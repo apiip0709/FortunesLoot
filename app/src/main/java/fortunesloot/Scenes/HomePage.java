@@ -29,7 +29,7 @@ public class HomePage {
         bgIv.setFitWidth(400);
         bgIv.setFitHeight(650);
             
-        // menmbuat button main
+        // membuat button main
         Button buttonMain = new Button("THRIFTY");
         buttonMain.setStyle(" -fx-background-color: transparent; -fx-font-size: 23px; -fx-font-weight: bold; -fx-font-family: Verdana; -fx-text-fill: white;");
         buttonMain.setPrefHeight(50);

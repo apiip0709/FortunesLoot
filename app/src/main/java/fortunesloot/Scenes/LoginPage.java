@@ -78,7 +78,7 @@ public class LoginPage {
 
         // Menambahkan event handler untuk tombol login
         loginButton.setOnAction(v -> {
-            // mengambil teks dari teks dan password field
+            // mengambil teks dari tusername dan password field
             String username = usernameField.getText();
             String password = passwordField.getText();
 
@@ -92,6 +92,7 @@ public class LoginPage {
                 pause.setOnFinished(event -> errorLabel.setVisible(false));
                 pause.play();
             } else {
+                // method untuk membuat table apabila belum ada, sekaligus
                 //Mendapatkan list semua pengguna dari database
                 registDb = new Registdb();
                 try {
