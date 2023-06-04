@@ -73,6 +73,7 @@ public class HomePage {
         VBox vBox2 = new VBox(360, label, vBox);
         vBox2.setAlignment(Pos.CENTER);
 
+        // scene
         StackPane spLayout = new StackPane(bgIv, vBox2);
         Scene scene = new Scene(spLayout, 400, 650);
         
